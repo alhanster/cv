@@ -1,0 +1,240 @@
+% -*- mode: LaTeX; -*-
+%
+% Top-level file for the full CV. Compile with:
+%   latexmk -pdf AlexHan.tex
+%
+% Content lives in the included files: ContactContent.tex, PubsContent.tex,
+% PresentationsContent.tex. Those cannot be compiled on their own.
+%
+% !! The preamble below is DUPLICATED in AlexHan-PubsOnly.tex. If you change a
+% !! \usepackage, a margin, or the \hypersetup block here, change it there too.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ENTRY FORMATTING CHEAT SHEET
+%
+% There is no structured entry macro in this template -- entries are formatted
+% by hand. Three idioms cover everything:
+%
+%   1. A standard entry: bold role/degree, plain institution, bold date at the
+%      right margin. Note the trailing "\\" then a lone "\\" to separate it from
+%      the next entry:
+%
+%        {\bf M.D.-Ph.D. Candidate,} Institution, City, ST \hfill {\bf 2025--Present}\\
+%        \\
+%
+%   2. Sub-details underneath an entry, with the bullet suppressed by \item[ ]:
+%
+%        \begin{itemize}
+%        \item[ ] Advisor: Prof.\ Name
+%        \end{itemize}
+%
+%   3. A section whose first content is a list needs \secstartswithlist{} right
+%      after \section{} to cancel a stray blank line.
+%
+% Dates use en-dashes: 2020--2024. Escape "&" as "\&" and "%" as "\%".
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\let\nofiles\relax % This is because res says to not emit aux files,
+                   % but lastpage needs aux files.
+\documentclass[margin,line]{res}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern} % Scalable Type 1 fonts; without this, T1 + Computer
+                     % Modern makes pdfTeX emit Type 3 bitmap fonts.
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\usepackage{etaremune}
+\usepackage[normalem]{ulem}
+\usepackage[style=iso]{datetime2}
+
+\oddsidemargin -.5in
+\evensidemargin -.5in
+\voffset -25pt
+%\topmargin -.2in
+\headsep 25pt
+\textwidth=6.0in
+\textheight=8.9in
+\itemsep=0in
+\parsep=0in
+
+% Headings
+\pagestyle{fancy}
+\lhead{Alex Han --- Curriculum Vitae (as of \today)}
+\chead{}
+\rhead{\thepage\ of \pageref*{LastPage}}
+\lfoot{}
+\cfoot{}
+\rfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+%\renewcommand{\footrulewidth}{0.4pt}
+
+% Give hyperref some metadata
+\hypersetup{pdftitle={Alex Han — Curriculum Vitae (CV)},
+  pdfauthor={Alex Han},
+  pdfsubject={Alex Han's academic curriculum vitae (CV)},
+  pdfkeywords={medicine, MD-PhD, computational biology, human genetics,
+    statistical genetics, machine learning, neurodegeneration,
+    Alzheimer's disease, drug target discovery}}
+
+% I want small caps for the section style
+\def\sectionfont{\sc}
+
+% Generate a PDF TOC
+\let\oldsection\section
+\def\section#1{\oldsection{#1}%
+\phantomsection%
+\addcontentsline{toc}{section}{#1}%
+}
+
+% The above seems to screw up the spacing for sections that start with lists...
+\newcommand{\secstartswithlist}{\leavevmode \vspace{-\baselineskip}}
+
+\begin{document}
+
+\newcommand{\myname}{Alex Han}
+\newlength{\mynamewidth}
+\settowidth{\mynamewidth}{\namefont\myname}
+
+\name{\hspace*{0.5\textwidth}\hspace{-0.5\mynamewidth} \myname \vspace*{.1in}}
+% On the first page, have no header.
+\thispagestyle{empty}
+
+\begin{resume}
+
+\input{ContactContent.tex}
+
+\section{Education}
+% TODO: replace with your degrees, most recent first.
+{\bf M.D.-Ph.D. Candidate,} Institution, City, ST, USA \hfill {\bf 2025--Present}\\
+\vspace*{-.1in}
+\begin{itemize}
+\item[ ] Program: TODO (e.g.\ Medical Scientist Training Program)
+\item[ ] Advisor: TODO
+\item[ ] Thesis Title: {\it TODO}
+\end{itemize}
+
+{\bf B.A./B.S., Field,} Institution, City, ST, USA \hfill {\bf 2020--2024}\\
+\vspace*{-.1in}
+\begin{itemize}
+\item[ ] TODO: honors, distinctions, GPA if you want it
+\item[ ] Senior Thesis Advisor: TODO
+\end{itemize}
+
+\section{Research Experience}
+% TODO: one block per lab/position, most recent first.
+{\bf Position,} Lab / Group, Institution, City, ST \hfill {\bf 2024--Present}\\
+\vspace*{-.1in}
+\begin{itemize}
+\item[ ] TODO: one line on the question and your contribution
+\item[ ] TODO: methods, tools, or datasets
+\end{itemize}
+
+{\bf Position,} Lab / Group, Institution, City, ST \hfill {\bf 2023--2025}\\
+\vspace*{-.1in}
+\begin{itemize}
+\item[ ] TODO
+\end{itemize}
+
+\input{PubsContent.tex}
+
+\input{PresentationsContent.tex}
+
+\section{Honors and Awards}
+% TODO: most recent first. Use the plain two-line idiom for anything without
+% sub-details.
+{\bf Award Name,} Granting Body \hfill {\bf 2024}\\
+\\
+{\bf Award Name,} Granting Body \hfill {\bf 2023--2024}\\
+\\
+{\bf Award Name,} Granting Body \hfill {\bf 2022}\\
+
+% Added to improve page breaks
+\vspace{-1em}
+
+\section{Leadership and Entrepreneurship}
+% TODO
+{\bf Role,} Organization, \url{https://example.org} \hfill {\bf 2022--Present}
+\begin{itemize}
+\item[ ] TODO: what you built and its scale
+\item[ ] TODO: outcome, coverage, or recognition
+\end{itemize}
+
+\section{Teaching and Mentoring}
+% TODO
+{\bf Role}, Institution
+\vspace*{.05in}
+\begin{itemize}
+\item[ ] COURSE 000, Course Title \hfill {\bf Fall 2024}
+\item[ ] COURSE 000, Course Title \hfill {\bf Spring 2024}
+\end{itemize}
+
+{\bf Mentees}
+\begin{itemize}
+\item[ ] Name, Institution \hfill {\bf 2024--Present}
+\end{itemize}
+
+\section{Service and Outreach}
+% TODO
+{\bf Professional Memberships}
+\vspace*{.05in}
+\begin{itemize}
+\item[ ] Society Name \hfill {\bf 2023--Present}
+\end{itemize}
+
+{\bf Journal referee}
+\vspace*{.05in}\\
+\hspace*{1em}
+TODO: comma-separated list of journals
+
+{\bf Outreach}
+\vspace*{.05in}
+\begin{itemize}
+\item[ ] Activity or venue \hfill {\bf 2024} \\
+  \hspace*{1em} TODO: one line of detail
+\end{itemize}
+
+\section{Technical Skills}
+% TODO
+{\bf Languages---}%
+TODO (e.g.\ Python, R, C/C++, Bash).
+Markup: \LaTeX, Markdown, HTML/CSS.
+
+{\bf Methods and tools---}%
+TODO (e.g.\ statistical genetics, single-cell and bulk RNA-seq analysis,
+machine learning, HPC/SLURM, Git).
+
+{\bf Software---}%
+TODO. Public code at \url{https://github.com/alhanster}.
+
+\newpage{}
+
+\section{References}
+\vspace*{.05in}
+% TODO: replace each block. Delete the ones you don't need.
+\parbox{\textwidth}{%
+{\bf Name,} Title, Institution \\
+Street Address \\
+City, ST 00000 \\
+email: \href{mailto:name@example.edu}{name@example.edu}}
+\par
+\parbox{\textwidth}{%
+{\bf Name,} Title, Institution \\
+Street Address \\
+City, ST 00000 \\
+email: \href{mailto:name@example.edu}{name@example.edu}}
+\par
+\parbox{\textwidth}{%
+{\bf Name,} Title, Institution \\
+Street Address \\
+City, ST 00000 \\
+email: \href{mailto:name@example.edu}{name@example.edu}}
+
+\end{resume}
+\end{document}
+
+% Local Variables:
+% mode: latex
+% End:

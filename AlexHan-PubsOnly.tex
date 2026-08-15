@@ -1,0 +1,89 @@
+% -*- mode: LaTeX; -*-
+%
+% Top-level file for the standalone publication list. Compile with:
+%   latexmk -pdf AlexHan-PubsOnly.tex
+%
+% !! This preamble is a DUPLICATE of the one in AlexHan.tex (that is how the
+% !! original template was built -- the two files do not share a preamble).
+% !! Any \usepackage, margin, or \hypersetup change made there must be made
+% !! here as well. The one intentional difference is \textheight.
+%
+\let\nofiles\relax % This is because res says to not emit aux files,
+                   % but lastpage needs aux files.
+\documentclass[margin,line]{res}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern} % Scalable Type 1 fonts; without this, T1 + Computer
+                     % Modern makes pdfTeX emit Type 3 bitmap fonts.
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\usepackage{etaremune}
+\usepackage[style=iso]{datetime2}
+
+\oddsidemargin -.5in
+\evensidemargin -.5in
+\voffset -25pt
+%\topmargin -.2in
+\headsep 25pt
+\textwidth=6.0in
+\textheight=9.4in % intentionally taller than AlexHan.tex
+\itemsep=0in
+\parsep=0in
+
+% Headings
+\pagestyle{fancy}
+\lhead{Alex Han --- Publication List (as of \today)}
+\chead{}
+\rhead{\thepage\ of \pageref*{LastPage}}
+\lfoot{}
+\cfoot{}
+\rfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+%\renewcommand{\footrulewidth}{0.4pt}
+
+% Give hyperref some metadata
+\hypersetup{pdftitle={Alex Han — Publication List},
+  pdfauthor={Alex Han},
+  pdfsubject={Alex Han's list of academic publications},
+  pdfkeywords={medicine, MD-PhD, computational biology, human genetics,
+    statistical genetics, machine learning, neurodegeneration,
+    Alzheimer's disease, drug target discovery}}
+
+% I want small caps for the section style
+\def\sectionfont{\sc}
+
+% Generate a PDF TOC
+\let\oldsection\section
+\def\section#1{\oldsection{#1}%
+\phantomsection%
+\addcontentsline{toc}{section}{#1}%
+}
+
+% The above seems to screw up the spacing for sections that start with lists...
+\newcommand{\secstartswithlist}{\leavevmode \vspace{-\baselineskip}}
+
+\begin{document}
+
+\newcommand{\myname}{Alex Han --- Publications}
+\newlength{\mynamewidth}
+\settowidth{\mynamewidth}{\namefont\myname}
+
+\name{\hspace*{0.5\textwidth}\hspace{-0.5\mynamewidth} \myname \vspace*{.1in}}
+% On the first page, have no header.
+\thispagestyle{empty}
+
+\begin{resume}
+
+\input{ContactContent.tex}
+
+\input{PubsContent.tex}
+
+\end{resume}
+\end{document}
+
+% Local Variables:
+% mode: latex
+% End:

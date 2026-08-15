@@ -1,0 +1,12 @@
+*.aux
+*.log
+*.out
+*Notes.bib
+*.rel
+*.blg
+*.gz
+*.fdb_latexmk
+*.fls
+*.toc
+
+AlexHan*.pdf
