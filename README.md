@@ -1,28 +1,14 @@
 ![LaTeX build](../../workflows/LaTeX%20build/badge.svg)
 [![Latest build of AlexHan.pdf](https://img.shields.io/badge/AlexHan.pdf-latest-orange.svg?style=flat)](../gh-action-result/pdflatex/AlexHan.pdf)
-[![Latest build of AlexHan-PubsOnly.pdf](https://img.shields.io/badge/AlexHan--PubsOnly.pdf-latest-orange.svg?style=flat)](../gh-action-result/pdflatex/AlexHan-PubsOnly.pdf)
 
 # Alex Han — curriculum vitae LaTeX source
 
-## Layout
+Two files matter:
 
-Two top-level files, each of which compiles to a PDF:
-
-- [AlexHan.tex](AlexHan.tex) — the full CV.
-- [AlexHan-PubsOnly.tex](AlexHan-PubsOnly.tex) — just the publication list, with the contact header.
-
-These pull in three content files, none of which can be compiled on their own:
-
-- [ContactContent.tex](ContactContent.tex) — the contact header.
-- [PubsContent.tex](PubsContent.tex) — publications and preprints.
-- [PresentationsContent.tex](PresentationsContent.tex) — talks and posters.
-
-[res.cls](res.cls) is the document class. It is **not** part of TeX Live and cannot be
-installed with `tlmgr`, so the copy in this repo is the only one — don't delete it.
-
-One thing to watch: `AlexHan-PubsOnly.tex` duplicates the preamble of
-`AlexHan.tex` rather than sharing it. Package and metadata changes have to be
-made in both files.
+- [AlexHan.tex](AlexHan.tex) — the entire CV, preamble and content.
+- [res.cls](res.cls) — the document class, which is what puts section titles out
+  in the left margin. It is **not** part of TeX Live and cannot be installed with
+  `tlmgr`, so the copy in this repo is the only one. Don't delete it.
 
 ## Building
 
@@ -31,7 +17,7 @@ files, which `lastpage` and `hyperref` need. That means the document requires tw
 passes; `latexmk` handles this automatically.
 
 ```bash
-latexmk -pdf -halt-on-error -interaction=nonstopmode -file-line-error AlexHan.tex AlexHan-PubsOnly.tex
+latexmk -pdf -halt-on-error -interaction=nonstopmode -file-line-error AlexHan.tex
 ```
 
 Clean up intermediate files with `latexmk -C`.
@@ -40,12 +26,25 @@ On macOS with [BasicTeX](https://www.tug.org/mactex/morepackages.html), the
 packages beyond the default install are:
 
 ```bash
-sudo tlmgr update --self && sudo tlmgr install latexmk lastpage etaremune datetime2 tracklang
+sudo /Library/TeX/texbin/tlmgr install latexmk lastpage etaremune datetime2 tracklang
 ```
 
-Every push also triggers the `LaTeX build` GitHub Action, which compiles both
-files in a full TeX Live container and force-pushes the PDFs to the orphan
-branch `gh-action-result/pdflatex` — that's what the badges above link to.
+Every push also triggers the `LaTeX build` GitHub Action, which compiles the
+document in a full TeX Live container and force-pushes the PDF to the orphan
+branch `gh-action-result/pdflatex` — that's what the badge above links to.
+
+## Editing
+
+There is a formatting cheat sheet in the comment block at the top of
+`AlexHan.tex`. The one piece of bookkeeping to remember: publications are
+numbered in descending order, so after adding one, bump `\setcounter{numPubs}`
+to the new total or the list won't end at 1.
+
+To edit on [Overleaf](https://www.overleaf.com) instead, zip the repo contents
+(not the enclosing folder) and use *New Project → Upload Project*. Set the
+compiler to pdfLaTeX; XeLaTeX and LuaLaTeX will fail on `inputenc`. Note that
+syncing back to GitHub is an Overleaf premium feature, so on a free account
+you'd be moving zips by hand — pick one home for the file and stick with it.
 
 ## Credit
 

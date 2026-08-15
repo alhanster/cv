@@ -1,13 +1,13 @@
 % -*- mode: LaTeX; -*-
 %
-% Top-level file for the full CV. Compile with:
-%   latexmk -pdf AlexHan.tex
+% Alex Han -- curriculum vitae.
 %
-% Content lives in the included files: ContactContent.tex, PubsContent.tex,
-% PresentationsContent.tex. Those cannot be compiled on their own.
+% Build:  latexmk -pdf AlexHan.tex        (clean up with: latexmk -C)
 %
-% !! The preamble below is DUPLICATED in AlexHan-PubsOnly.tex. If you change a
-% !! \usepackage, a margin, or the \hypersetup block here, change it there too.
+% This is the whole CV: preamble, then content, in one file. The only other
+% file that matters is res.cls, the document class that puts section titles
+% out in the left margin. res.cls is NOT part of TeX Live and cannot be
+% reinstalled with tlmgr -- the copy in this repo is the only one.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENTRY FORMATTING CHEAT SHEET
@@ -32,6 +32,9 @@
 %      after \section{} to cancel a stray blank line.
 %
 % Dates use en-dashes: 2020--2024. Escape "&" as "\&" and "%" as "\%".
+%
+% WHEN YOU ADD A PUBLICATION: bump \setcounter{numPubs} below the Publications
+% heading to the new total, or the descending numbering will not end at 1.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \let\nofiles\relax % This is because res says to not emit aux files,
@@ -92,6 +95,17 @@
 % The above seems to screw up the spacing for sections that start with lists...
 \newcommand{\secstartswithlist}{\leavevmode \vspace{-\baselineskip}}
 
+% Publication link helpers -- use whichever applies to a given entry.
+\newcommand{\doi}[1]{[\href{https://doi.org/#1}{doi:#1}]}
+\newcommand{\biorxiv}[1]{[\href{https://doi.org/#1}{bioRxiv:#1}]}
+\newcommand{\medrxiv}[1]{[\href{https://doi.org/#1}{medRxiv:#1}]}
+\newcommand{\pmid}[1]{[\href{https://pubmed.ncbi.nlm.nih.gov/#1/}{PMID:#1}]}
+
+% Publications are listed newest-first but numbered DESCENDING (via etaremune),
+% so the top of the list always shows your current total and #1 is your oldest.
+\newcounter{numPubs}
+\newcounter{pubCounter}
+
 \begin{document}
 
 \newcommand{\myname}{Alex Han}
@@ -104,7 +118,19 @@
 
 \begin{resume}
 
-\input{ContactContent.tex}
+\section{Contact Information}
+% Three lines, left column plain and right column hyperlinked. Keep the two
+% columns balanced -- add or remove a line from both sides together.
+%
+% This repo is public. Street address and phone are left out on purpose;
+% add them only if you want them on the open internet.
+%
+% TODO: fill in your real details.
+Department / Program        \hfill \href{mailto:TODO@example.edu}{TODO@example.edu}\\
+Institution                 \hfill \href{https://example.com/}{example.com}\\
+City, ST 00000 USA          \hfill \href{https://orcid.org/0000-0000-0000-0000}{ORCID: 0000-0000-0000-0000}
+% Optional extra line:
+% 000 Building Name           \hfill \href{tel:1-000-000-0000}{1-000-000-0000}\\
 
 \section{Education}
 % TODO: replace with your degrees, most recent first.
@@ -138,9 +164,75 @@
 \item[ ] TODO
 \end{itemize}
 
-\input{PubsContent.tex}
+% Author-name convention: bold your own name so it is findable at a glance,
+% e.g. {\bf Han,~A.~L.}  Use ~ between initials to prevent line breaks.
+\setcounter{numPubs}{3} % TODO: update whenever you add a publication
+\setcounter{pubCounter}{\value{numPubs}}
 
-\input{PresentationsContent.tex}
+\section{Manuscripts Under Review and Preprints}
+\secstartswithlist{}%
+\begin{etaremune}[start=\value{pubCounter}]
+\item
+  Lastname,~A.~B.,
+  {\bf Han,~A.~L.},
+  Lastname,~C.~D.
+  (2026)
+  {\it Title of the manuscript under review},
+  submitted to Journal Name.
+  \biorxiv{10.1101/0000.00.00.000000}
+% TODO: add further preprints here
+\end{etaremune}
+% Carry the numbering into the next list, continuing one below the last item.
+\setcounter{pubCounter}{\value{enumi}}\addtocounter{pubCounter}{-1}
+
+\section{Peer-Reviewed Publications}
+\secstartswithlist{}%
+\begin{etaremune}[start=\value{pubCounter}]
+\item
+  {\bf Han,~A.~L.},
+  Lastname,~C.~D.,
+  Lastname,~E.~F.,
+  {\it et al.}
+  (2025)
+  {\it Title of the paper},
+  \href{https://doi.org/10.0000/example}{Journal Name~{\bf 16}, 2648}.
+  \doi{10.0000/example}
+\item
+  Lastname,~G.~H.,
+  {\bf Han,~A.~L.},
+  Lastname,~I.~J.
+  (2022)
+  {\it Title of the earlier paper},
+  \href{https://doi.org/10.0000/example2}{Journal Name~{\bf 19}(3), 190--196}.
+  \doi{10.0000/example2}
+% TODO: add further publications here, newest first
+\end{etaremune}
+
+% The presentation lists below are numbered independently of the publications,
+% so no counter bookkeeping is needed -- just add new items at the top.
+\section{Oral Presentations}
+\secstartswithlist{}%
+\begin{etaremune}
+\item
+  Venue or conference name, City, ST
+  \hfill{}
+  Month 2025
+\item
+  Venue or conference name, City, ST
+  \hfill{}
+  Month 2024
+% TODO: add talks here, newest first
+\end{etaremune}
+
+\section{Poster Presentations}
+\secstartswithlist{}%
+\begin{etaremune}
+\item
+  Conference name, City, ST
+  \hfill{}
+  Month 2025
+% TODO: add posters here, newest first
+\end{etaremune}
 
 \section{Honors and Awards}
 % TODO: most recent first. Use the plain two-line idiom for anything without
