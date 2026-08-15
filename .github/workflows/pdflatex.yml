@@ -11,7 +11,7 @@ jobs:
       contents: write # needed to force-push the built PDFs to the orphan branch
     steps:
       - name: Set up Git repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
